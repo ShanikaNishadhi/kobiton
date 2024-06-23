@@ -1,0 +1,450 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: TagAPI API
+    version: 0.0.1
+paths:
+    /v2/tags:
+        get:
+            tags:
+                - TagAPI
+            description: |-
+                List all tags
+
+                 Retrieve a list of tags in the Tags Repository.
+
+                 Only the following tags can be retrieved:
+                 - Public tags (`is_private` is `false`) created by any user in your organization.
+                 - Private tags created by your own account.
+            operationId: TagAPI_ListTags
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListTagsResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - TagAPI
+            description: |-
+                Create a tag
+
+                 Create a tag in your organization.
+            operationId: TagAPI_CreateTag
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateTagRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateTagResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - TagAPI
+            description: |-
+                Delete tags
+
+                 Delete one or many tags in your organization.
+
+                 ----
+
+                 **Note**:
+                 - If a private tag and a public tag shares the same name, they will both be deleted.
+                 - Deleted tag will be removed from the device as well.
+
+                 ----
+            operationId: TagAPI_DeleteTags
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DeleteTagsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteTagsResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v2/tags/devices:
+        get:
+            tags:
+                - TagAPI
+            description: |-
+                Get devices with all specific tags
+
+                 Retrieve a list of devices assigned with **all** specified tags. Devices with only some of the tags
+                 specified are not included.
+                 To specify more than 1 tag, append more than 1 `tagNames` query parameters into the request.
+
+                 Example: `/v2/tags/devices?tagNames=tagA&tagNames=tagB`
+
+                 ----
+
+                 **NOTE**: only public tag (`is_private` is `false`) can be used in this endpoint.
+            operationId: TagAPI_GetDeviceTags
+            parameters:
+                - name: tagNames
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetDeviceTagsResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v2/tags/{tagName}:
+        get:
+            tags:
+                - TagAPI
+            description: |-
+                Get a tag
+
+                 Retrieve information about a specific tag by its name.
+
+                 ----
+
+                 **Note**: Currently, only public tag (`is_private` is `false`) can be retrieved using this endpoint.
+
+                 ----
+            operationId: TagAPI_GetTag
+            parameters:
+                - name: tagName
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetTagResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v2/tags/{tagName}/devices:
+        post:
+            tags:
+                - TagAPI
+            description: |-
+                Assign tag to devices
+
+                 Assign tag to accessible devices in the organization.
+
+                 ----
+
+                 **Note**: Currently, only public tag (`is_private` is `false`) can be performed on using this endpoint.
+                 Go to the Kobiton portal to assign private tags created by your account to devices.
+
+                 ----
+            operationId: TagAPI_AssignTagDevices
+            parameters:
+                - name: tagName
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AssignTagDevicesRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AssignTagDevicesResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - TagAPI
+            description: |-
+                Remove tag from devices
+
+                 Remove tag from accessible devices in the organization.
+
+                 ----
+
+                 **Note**: Currently, only public tag (`is_private` is `false`) can be performed on using this endpoint.
+                 Go to the Kobiton portal to remove private tags created by your account from devices.
+
+                 ----
+            operationId: TagAPI_RemoveTagDevices
+            parameters:
+                - name: tagName
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AssignTagDevicesRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AssignTagDevicesResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+components:
+    schemas:
+        Any:
+            type: object
+            properties:
+                value:
+                    $ref: '#/components/schemas/GoogleProtobufAny'
+                yaml:
+                    type: string
+        AssignTagDevicesRequest:
+            required:
+                - tagName
+            type: object
+            properties:
+                tagName:
+                    type: string
+                udids:
+                    type: array
+                    items:
+                        type: string
+        AssignTagDevicesResponse:
+            type: object
+            properties:
+                success:
+                    $ref: '#/components/schemas/AssignTagDevicesResponse_AssignTagDevicesSuccessResponse'
+                failed:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AssignTagDevicesResponse_AssignTagDevicesFailedResponse'
+        AssignTagDevicesResponse_AssignTagDevicesFailedResponse:
+            type: object
+            properties:
+                message:
+                    type: string
+                udids:
+                    type: array
+                    items:
+                        type: string
+        AssignTagDevicesResponse_AssignTagDevicesSuccessResponse:
+            type: object
+            properties:
+                name:
+                    type: string
+                udids:
+                    type: array
+                    items:
+                        type: string
+        CreateTagRequest:
+            required:
+                - name
+            type: object
+            properties:
+                name:
+                    type: string
+                isPrivate:
+                    type: boolean
+        CreateTagResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+        DeleteTagsRequest:
+            required:
+                - names
+            type: object
+            properties:
+                names:
+                    type: array
+                    items:
+                        type: string
+        DeleteTagsResponse:
+            type: object
+            properties:
+                success:
+                    $ref: '#/components/schemas/DeleteTagsResponse_DeleteTagsSuccessResponse'
+                failed:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/DeleteTagsResponse_DeleteTagsFailedResponse'
+        DeleteTagsResponse_DeleteTagsFailedResponse:
+            type: object
+            properties:
+                message:
+                    type: string
+                names:
+                    type: array
+                    items:
+                        type: string
+        DeleteTagsResponse_DeleteTagsSuccessResponse:
+            type: object
+            properties:
+                names:
+                    type: array
+                    items:
+                        type: string
+        DeviceTag:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                isPrivate:
+                    type: boolean
+        DeviceTagList:
+            type: object
+            properties:
+                udid:
+                    type: string
+                tags:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Tag'
+        ExternalDocs:
+            type: object
+            properties:
+                description:
+                    type: string
+                url:
+                    type: string
+                specificationExtension:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/NamedAny'
+            description: Allows referencing an external resource for extended documentation.
+        GetDeviceTagsResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/DeviceTagList'
+        GetTagResponse:
+            type: object
+            properties:
+                name:
+                    type: string
+                udids:
+                    type: array
+                    items:
+                        type: string
+                quantity:
+                    type: integer
+                    format: int32
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        ListTagsResponse:
+            type: object
+            properties:
+                tags:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/DeviceTag'
+        NamedAny:
+            type: object
+            properties:
+                name:
+                    type: string
+                    description: Map key
+                value:
+                    allOf:
+                        - $ref: '#/components/schemas/Any'
+                    description: Mapped value
+            description: Automatically-generated message used to represent maps of Any as ordered (name,value) pairs.
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        Tag:
+            type: object
+            properties:
+                name:
+                    type: string
+                description:
+                    type: string
+                externalDocs:
+                    $ref: '#/components/schemas/ExternalDocs'
+                specificationExtension:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/NamedAny'
+            description: Adds metadata to a single tag that is used by the Operation Object. It is not mandatory to have a Tag Object per tag defined in the Operation Object instances.
+tags:
+    - name: TagAPI

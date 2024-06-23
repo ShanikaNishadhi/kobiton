@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Actor&family=Average+Sans&display=swap');
+
+:root {
+    --color-heading: #24283d;
+    --color-para: #26283e;
+    --color-links: #2472a4;
+    --color-alt: #49aab4;
+    --color-sidebar: #cccccc;
+    --color-bg: #f0f1ee;
+    
+    --font-heading: 'Actor', sans-serif;
+    --font-para: 'Average Sans', sans-serif;
+
+    --font-size-small: 14px;
+    --font-size-regular: 16px;
+}
+
+/* Logo */
+img.mr-2 {
+    width: 200px;
+}
+
+/* Logo text */
+span.text-clip {
+    display: none;
+}
+
+/* Github Logo dark mode*/
+html.dark .github-icon {
+    fill: white;
+}
+
+pre {
+    padding: 1rem;
+}
+
+section, .sphinx-tabs-panel {
+    overflow: auto;
+}
+
+.sphinx-tabs-panel {
+    background-color: unset;
+}
+
+.sphinx-tabs-tab[aria-selected="true"] {
+    background-color: unset;
+    border-bottom: unset;
+}
+
+.toctree-wrapper {
+    font-size: unset;
+}
+
+#table-of-contents {
+    display: grid;
+    grid-template-columns: 0% 33% 33% 33%;
+}
+
+#table-of-contents > h3 {
+    overflow: hidden;
+}
+
+/* Mobile Responsiveness */
+
+@media only screen and (max-width: 600px) {
+    
+    #table-of-contents {
+        display: unset;
+    }
+
+    #search-input {
+        width: 150px;
+    }
+
+    span.text-clip {
+        display: none;
+    }
+
+    img.mr-2 {
+        width: 150px;
+    }
+
+    button.mr-2 {
+        width: auto !important;
+    }
+}

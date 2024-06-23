@@ -1,0 +1,6 @@
+*.json
+*.xcf
+build/*
+code/**
+renders/**
+responses/**
