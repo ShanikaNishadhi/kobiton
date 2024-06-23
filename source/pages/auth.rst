@@ -1,4 +1,4 @@
 Major components
 ================
 
-This page contain information about main components of Kobiton API
+This page contains information about main components of Kobiton API.

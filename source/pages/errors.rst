@@ -1,4 +1,4 @@
 Errors
 ==============
 
-This page contain  common errors users will face when working with Kobiton API
+This page contains  common errors users will face when working with Kobiton API.
